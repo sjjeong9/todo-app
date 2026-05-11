@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  ci:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+          cache-dependency-path: client/package-lock.json
+
+      - name: 클라이언트 의존성 설치
+        working-directory: client
+        run: npm ci
+
+      - name: ESLint 검사
+        working-directory: client
+        run: npm run lint
+
+      - name: 빌드 확인
+        working-directory: client
+        run: npm run build
