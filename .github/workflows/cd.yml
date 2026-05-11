@@ -18,6 +18,6 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Railway 배포
-        run: railway up --detach
+        run: railway up --detach --service todo-app
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
